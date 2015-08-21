@@ -1,0 +1,196 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+
+  <groupId>de.juplo</groupId>
+  <artifactId>maven-grunt-integration</artifactId>
+  <name>Juplo - Example Integration of Maven and Grunt</name>
+  <version>0.1</version>
+  <packaging>war</packaging>
+  <url>http://www.juplo.de/maven-grunt-integration</url>
+
+
+  <prerequisites>
+    <maven>3.0.0</maven>
+  </prerequisites>
+
+
+  <scm>
+    <connection>scm:git:http://juplo.de/git/maven-grunt-integration</connection>
+    <developerConnection>scm:git:ssh://juplo.de:/var/lib/git/juplo/maven-grunt-integration</developerConnection>
+    <url>http://juplo.de/gitweb/?p=maven-grunt-integration;a=summary</url>
+  </scm>
+
+
+  <developers>
+    <developer>
+      <id>kai</id>
+      <name>Kai Moritz</name>
+      <email>kai@juplo.de</email>
+    </developer>
+  </developers>
+
+
+  <properties>
+
+    <!-- Zeichensatz -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!-- Verwendete Versionen -->
+    <servlet-api.version>3.1.0</servlet-api.version>
+    <slf4j.version>1.7.12</slf4j.version>
+    <springframework.version>4.2.0.RELEASE</springframework.version>
+    <thymeleaf.version>2.1.4.RELEASE</thymeleaf.version>
+    <thymeleaf-layout-dialect.version>1.2.9</thymeleaf-layout-dialect.version>
+
+  </properties>
+
+
+  <dependencies>
+
+    <!-- Spring -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>${springframework.version}</version>
+    </dependency>
+
+    <!-- Thymeleaf -->
+    <dependency>
+      <groupId>org.thymeleaf</groupId>
+      <artifactId>thymeleaf</artifactId>
+      <version>${thymeleaf.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.thymeleaf</groupId>
+      <artifactId>thymeleaf-spring4</artifactId>
+      <version>${thymeleaf.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>nz.net.ultraq.thymeleaf</groupId>
+      <artifactId>thymeleaf-layout-dialect</artifactId>
+      <version>${thymeleaf-layout-dialect.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- Servlet -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>${servlet-api.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Logging -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>${slf4j.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <version>${slf4j.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
+  </dependencies>
+
+
+  <distributionManagement>
+    <repository>
+      <id>juplo.internal</id>
+      <name>Internal Release Repository</name>
+      <url>http://juplo.de/archiva/repository/internal/</url>
+    </repository>
+    <snapshotRepository>
+      <id>juplo.snapshots</id>
+      <name>Internal Snapshot Repository</name>
+      <url>http://juplo.de/archiva/repository/snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
+
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.3</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+          <encoding>utf8</encoding>
+          <showWarnings>true</showWarnings>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.4</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>9.2.13.v20150730</version>
+        <configuration>
+          <useTestScope>true</useTestScope>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changes-plugin</artifactId>
+        <version>2.11</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.10.3</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+        <version>2.5</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>2.18.1</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-scm-plugin</artifactId>
+        <version>1.9.4</version>
+        <configuration>
+          <goals>install</goals>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+
+</project>

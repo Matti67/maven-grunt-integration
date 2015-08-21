@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html layout:decorator="templates/layout" th:with="title='B'">
+
+<head>
+
+  <!--/*-->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!--*/-->
+
+  <title>Maven/Grunt-Integration - B</title>
+
+</head>
+
+<body>
+
+
+  <article layout:fragment="content">
+    <h1>B</h1>
+    <p>Content of page B.</p>
+  </article>
+
+  <h1>Menu for page B</h1>
+  <ul layout:fragment="menu">
+    <li><a href="#" th:href="@{/}">Home</a></li>
+    <li><a href="#" th:href="@{/a.html}">A</a></li>
+    <li><strong>B</strong></li>
+    <li><a href="#" th:href="@{/c.html}">C</a></li>
+  </ul>
+
+
+</body>
+
+</html>

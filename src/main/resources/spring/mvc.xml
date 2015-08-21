@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/mvc
+           http://www.springframework.org/schema/mvc/spring-mvc.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util.xsd
+           ">
+
+  <!-- Resolve app-parameters through java-systemproperties -->
+  <context:property-placeholder location="classpath:maven-grunt-integration.properties" />
+
+  <!-- Needed, to map the servlet on /* -->
+  <mvc:default-servlet-handler/>
+  <mvc:view-controller path="/" view-name="index"/>
+
+  <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+    <property name="mappings">
+      <value>
+        /thymeleaf/**=staticResources
+        /*.html=urlFilenameViewController
+        /**/*.html=urlFilenameViewController
+      </value>
+    </property>
+    <property name="order" value="10"/>
+  </bean>
+  <bean id="urlFilenameViewController" class="org.springframework.web.servlet.mvc.UrlFilenameViewController"/>
+  <bean id="staticResources" class="org.springframework.web.servlet.resource.ResourceHttpRequestHandler">
+    <property name="locations">
+      <list>
+        <value>/thymeleaf/</value>
+      </list>
+    </property>
+  </bean>
+
+  <!-- Thymeleaf Spring-View-Resolver -->
+  <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+    <property name="templateEngine" ref="templateEngine" />
+    <property name="characterEncoding" value="UTF-8" />
+    <property name="contentType" value="text/html; charset=UTF-8" />
+  </bean>
+
+
+  <!-- Thymeleaf Template-Resolver -->
+  <bean id="templateResolver" class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+    <property name="prefix" value="/thymeleaf/" />
+    <property name="suffix" value=".html" />
+    <property name="templateMode" value="HTML5" />
+    <property name="characterEncoding" value="UTF-8" />
+    <property name="cacheable" value="${maven-grunt-integration.cacheable}" />
+  </bean>
+
+  <!-- Thymeleaf Spring4-Template-Engine -->
+  <bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+    <property name="templateResolver" ref="templateResolver" />
+    <property name="additionalDialects">
+      <util:set>
+        <bean class="nz.net.ultraq.thymeleaf.LayoutDialect"/>
+      </util:set>
+    </property>
+  </bean>
+
+</beans>
