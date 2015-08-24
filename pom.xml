@@ -7,7 +7,7 @@
   <groupId>de.juplo</groupId>
   <artifactId>maven-grunt-integration</artifactId>
   <name>Juplo - Example Integration of Maven and Grunt</name>
-  <version>0.1</version>
+  <version>2.0.0</version>
   <packaging>war</packaging>
   <url>http://www.juplo.de/maven-grunt-integration</url>
 
@@ -136,6 +136,18 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.6</version>
+        <configuration>
+          <webResources>
+            <resource>
+              <directory>src/main/frontend/dist</directory>
+            </resource>
+          </webResources>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
         <version>2.4</version>
         <executions>
@@ -153,8 +165,43 @@
         <artifactId>jetty-maven-plugin</artifactId>
         <version>9.2.13.v20150730</version>
         <configuration>
+          <webApp>
+            <resourceBases>
+              <resourceBase>src/main/frontend/dist</resourceBase>
+              <resourceBase>src/main/webapp</resourceBase>
+            </resourceBases>
+          </webApp>
           <useTestScope>true</useTestScope>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
+        <version>0.0.24</version>
+        <executions>
+          <execution>
+            <id>install node and npm</id>
+            <goals>
+              <goal>install-node-and-npm</goal>
+            </goals>
+            <configuration>
+              <nodeVersion>v0.10.18</nodeVersion>
+              <npmVersion>1.3.8</npmVersion>
+            </configuration>
+          </execution>
+          <execution>
+            <id>npm install</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>grunt build</id>
+            <goals>
+              <goal>grunt</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

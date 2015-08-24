@@ -1,0 +1,12 @@
+{
+  "name": "maven-grunt-integration",
+  "description": "Example, how to ingegrat maven with a frontend developed with Grunt",
+  "homepage": "http://juplo.de/maven-grunt-integration",
+  "author": "kai@juplo.de",
+  "version": "1.0.0",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-cli": "~0.1.13",
+    "grunt-newer": "~1.1.1"
+  }
+}
